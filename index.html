@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Clock">
+<meta name="application-name" content="Clock">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+<meta name="referrer" content="no-referrer">
+<title>Clock</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<!-- Launch screens: plain black, one per iPhone screen size (portrait). -->
+<link rel="apple-touch-startup-image" href="icons/splash-1320x2868.png" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1206x2622.png" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1080x2340.png" media="(device-width: 360px) and (device-height: 780px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+<link rel="apple-touch-startup-image" href="icons/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+<link rel="apple-touch-startup-image" href="icons/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <mask id="m-alarm" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="28">
+      <rect width="28" height="28" fill="#fff"/>
+      <path d="M14 9.8V15.5H9.6" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </mask>
+    <mask id="m-stopwatch" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="28">
+      <rect width="28" height="28" fill="#fff"/>
+      <path d="M14 15.8V8.4" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="14" cy="15.8" r="2.1" fill="#000"/>
+    </mask>
+    <symbol id="i-globe" viewBox="0 0 28 28">
+      <g fill="none" stroke="currentColor" stroke-width="1.75">
+        <circle cx="14" cy="14.2" r="11"/>
+        <ellipse cx="14" cy="14.2" rx="4.9" ry="11"/>
+        <path d="M14 3.2V25.2M3 14.2H25M4.6 8.6H23.4M4.6 19.8H23.4"/>
+      </g>
+    </symbol>
+    <symbol id="i-alarm" viewBox="0 0 28 28">
+      <g fill="currentColor">
+        <circle cx="14" cy="15.3" r="10.1" mask="url(#m-alarm)"/>
+        <path d="M3.6 7.3A3.7 3.7 0 0 1 11 7.3Z" transform="rotate(-40 7.3 7.3)"/>
+        <path d="M17 7.3A3.7 3.7 0 0 1 24.4 7.3Z" transform="rotate(40 20.7 7.3)"/>
+      </g>
+      <path d="M8.6 23.3 7.2 25.1M19.4 23.3 20.8 25.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-stopwatch" viewBox="0 0 28 28">
+      <g fill="currentColor">
+        <circle cx="14" cy="15.8" r="10.9" mask="url(#m-stopwatch)"/>
+        <rect x="12.9" y="1.4" width="2.2" height="3.6" rx="0.8"/>
+        <rect x="21.4" y="5" width="2" height="3" rx="0.7" transform="rotate(45 22.4 6.5)"/>
+      </g>
+    </symbol>
+    <symbol id="i-timer" viewBox="0 0 28 28">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M15.9 4.6A10.5 10.5 0 1 1 12.1 4.6"/>
+        <path d="M14 4.6V7.8"/>
+      </g>
+      <path d="M8.9 9.9 15.24 13.76A1.75 1.75 0 0 1 12.76 16.24Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-club" viewBox="0 0 28 28">
+      <g fill="currentColor">
+        <circle cx="14" cy="8.4" r="4.7"/>
+        <circle cx="8.6" cy="15.6" r="4.7"/>
+        <circle cx="19.4" cy="15.6" r="4.7"/>
+        <path d="M12.3 11.5h3.4v4.2c.3 3.6 1.4 6.5 3.4 9H8.9c2-2.5 3.1-5.4 3.4-9Z"/>
+      </g>
+    </symbol>
+    <symbol id="i-spade" viewBox="0 0 28 28">
+      <path fill="currentColor" d="M14 2.6c-2.7 4.2-9.6 7.6-9.6 12.6 0 3 2.2 5.1 4.8 5.1 1.7 0 3-.7 4-1.9-.3 2.6-1.2 4.6-2.9 6.3h7.4c-1.7-1.7-2.6-3.7-2.9-6.3 1 1.2 2.3 1.9 4 1.9 2.6 0 4.8-2.1 4.8-5.1 0-5-6.9-8.4-9.6-12.6Z"/>
+    </symbol>
+    <symbol id="i-heart" viewBox="0 0 28 28">
+      <path fill="currentColor" d="M14 24.6C6.4 19.1 3 14.6 3 10.2 3 6.9 5.5 4.6 8.4 4.6c2.3 0 4.3 1.3 5.6 3.4 1.3-2.1 3.3-3.4 5.6-3.4 2.9 0 5.4 2.3 5.4 5.6 0 4.4-3.4 8.9-11 14.4Z"/>
+    </symbol>
+    <symbol id="i-diamond" viewBox="0 0 28 28">
+      <path fill="currentColor" d="M14 2.4c2.3 3.9 5.1 7.7 8.7 11.6-3.6 3.9-6.4 7.7-8.7 11.6-2.3-3.9-5.1-7.7-8.7-11.6 3.6-3.9 6.4-7.7 8.7-11.6Z"/>
+    </symbol>
+    <symbol id="i-number" viewBox="0 0 28 28">
+      <path d="M11 4 9 24M19 4l-2 20M5 10h19M4 18h19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24">
+      <path d="M12 1.6V22.4M1.6 12H22.4" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 10 17">
+      <path d="M1.8 1.6 8.4 8.5 1.8 15.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-updown" viewBox="0 0 10 17">
+      <path d="M1.6 6 5 2.4 8.4 6M1.6 11 5 14.6 8.4 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 20 20">
+      <path d="M3.5 10.5 8 15 16.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-xmark" viewBox="0 0 20 20">
+      <path d="M4.5 4.5 15.5 15.5M15.5 4.5 4.5 15.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-bed" viewBox="0 0 20 14">
+      <g fill="currentColor">
+        <path d="M2.6.4h14.8a1.9 1.9 0 0 1 1.9 1.9v3.4H.7V2.3A1.9 1.9 0 0 1 2.6.4Z"/>
+        <rect x="0" y="6.4" width="20" height="4.4" rx="1.1"/>
+        <rect x=".3" y="10" width="2.2" height="3.4" rx=".7"/>
+        <rect x="17.5" y="10" width="2.2" height="3.4" rx=".7"/>
+      </g>
+      <g fill="#000">
+        <rect x="2.4" y="2.6" width="6.6" height="2.4" rx="1.2"/>
+        <rect x="11" y="2.6" width="6.6" height="2.4" rx="1.2"/>
+      </g>
+    </symbol>
+    <symbol id="i-bell" viewBox="0 0 16 16">
+      <path fill="currentColor" d="M8 1.2a1 1 0 0 1 1 1v.4c2.1.5 3.5 2.3 3.5 4.5v2.6l1.3 1.6c.4.5 0 1.2-.6 1.2H2.8c-.6 0-1-.7-.6-1.2l1.3-1.6V7.1c0-2.2 1.4-4 3.5-4.5v-.4a1 1 0 0 1 1-1Zm-1.9 12.2h3.8a1.9 1.9 0 0 1-3.8 0Z"/>
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 16 16">
+      <path fill="currentColor" d="M4.4 2.6c0-.8.9-1.3 1.6-.9l8.1 5.4c.6.4.6 1.3 0 1.7L6 14.3c-.7.5-1.6 0-1.6-.9Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="app">
+  <main id="pages">
+
+    <!-- World Clock -->
+    <section class="page" id="page-worldclock" data-title="World Clock">
+      <div class="scroller">
+        <h1 class="large-title">World Clock</h1>
+        <div class="wc-list" id="wc-list"></div>
+      </div>
+      <div class="edge-top"></div>
+      <header class="navbar">
+        <button class="glass-pill" type="button">Edit</button>
+        <div class="nav-title nav-title-collapsed">World Clock</div>
+        <button class="glass-circle" type="button" aria-label="Add"><svg class="ico-plus"><use href="#i-plus"/></svg></button>
+      </header>
+    </section>
+
+    <!-- Alarms -->
+    <section class="page" id="page-alarms" data-title="Alarms">
+      <div class="scroller">
+        <div class="al-section-title al-sleep-title"><svg class="ico-bed"><use href="#i-bed"/></svg>Sleep | Wake Up</div>
+        <div class="al-row al-sleep">
+          <div class="al-main">
+            <div class="clock-time"><span class="digits">5:00</span><span class="ampm">AM</span></div>
+            <div class="al-sub al-sub-white">Tomorrow Morning</div>
+          </div>
+          <button class="change-pill" type="button">CHANGE</button>
+        </div>
+        <div class="al-section-title al-other-title">Other</div>
+        <div id="al-list"></div>
+      </div>
+      <div class="edge-top"></div>
+      <header class="navbar">
+        <button class="glass-pill" type="button">Edit</button>
+        <div class="nav-title">Alarms</div>
+        <button class="glass-circle" type="button" aria-label="Add"><svg class="ico-plus"><use href="#i-plus"/></svg></button>
+      </header>
+    </section>
+
+    <!-- Stopwatch -->
+    <section class="page" id="page-stopwatch" data-title="Stopwatch">
+      <div class="scroller sw-scroller">
+        <div class="sw-display" id="sw-display"></div>
+        <div class="btn-row sw-btns">
+          <button class="round-btn btn-grey" id="sw-left" type="button" disabled><span>Lap</span></button>
+          <div class="page-dots"><i class="on"></i><i></i></div>
+          <button class="round-btn btn-green" id="sw-right" type="button"><span>Start</span></button>
+        </div>
+        <div class="sw-laps" id="sw-laps"></div>
+      </div>
+    </section>
+
+    <!-- Timers -->
+    <section class="page" id="page-timers" data-title="Timers">
+      <div class="scroller">
+        <h1 class="large-title">Timers</h1>
+        <div class="timer-stage">
+          <div class="picker" id="picker">
+            <div class="picker-band"></div>
+            <div class="picker-layer picker-dim" id="picker-dim"></div>
+            <div class="picker-layer picker-sel" id="picker-sel"></div>
+          </div>
+          <div class="timer-run" id="timer-run" hidden>
+            <svg class="ring" viewBox="0 0 280 280" aria-hidden="true">
+              <circle class="ring-track" cx="140" cy="140" r="136"/>
+              <circle class="ring-fill" id="ring-fill" cx="140" cy="140" r="136"/>
+            </svg>
+            <div class="run-center">
+              <div class="run-time" id="run-time">5:00</div>
+              <div class="run-end"><svg class="ico-bell"><use href="#i-bell"/></svg><span id="run-end">9:07 PM</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row timer-btns">
+          <button class="round-btn btn-grey btn-cancel" id="t-cancel" type="button"><span>Cancel</span></button>
+          <button class="round-btn btn-green" id="t-start" type="button"><span>Start</span></button>
+        </div>
+        <div class="group timer-opts">
+          <div class="cell"><span class="cell-label">Label</span><span class="cell-value cell-placeholder">Timer</span></div>
+          <div class="cell"><span class="cell-label">When Timer Ends</span><span class="cell-value">Radial</span><svg class="ico-chevron"><use href="#i-chevron-right"/></svg></div>
+        </div>
+        <h2 class="section-title recents-title">Recents</h2>
+        <div class="recents" id="recents"></div>
+      </div>
+      <div class="edge-top"></div>
+      <header class="navbar">
+        <button class="glass-pill" type="button">Edit</button>
+        <div class="nav-title nav-title-collapsed">Timers</div>
+      </header>
+    </section>
+
+    <!-- Card entry (performer only) -->
+    <section class="page" id="page-entry">
+      <header class="navbar">
+        <div class="nav-title entry-title"><span id="entry-title">Clubs</span><span class="entry-steps" id="entry-steps"></span></div>
+      </header>
+      <div class="keypad" id="keypad"></div>
+    </section>
+
+  </main>
+
+  <nav id="tabbar" aria-label="Tabs">
+    <div class="tb-pill">
+      <div class="tb-cap" id="tb-cap"></div>
+      <div class="tb-items" id="tb-items"></div>
+    </div>
+  </nav>
+
+  <!-- Timer finished alert -->
+  <div class="alert" id="alert" hidden>
+    <div class="alert-inner">
+      <div class="alert-kicker"><svg class="ico-alert"><use href="#i-timer"/></svg>Timer</div>
+      <div class="alert-time" id="alert-time">0:00</div>
+      <div class="alert-actions">
+        <button class="alert-btn alert-repeat" id="alert-repeat" type="button">Repeat</button>
+        <button class="alert-btn alert-stop" id="alert-stop" type="button">Stop</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings sheet (performer only; long-press Timers) -->
+  <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+  <div class="sheet" id="sheet" hidden>
+    <header class="sheet-nav">
+      <button class="glass-circle sheet-close" id="sheet-close" type="button" aria-label="Close"><svg class="ico-x"><use href="#i-xmark"/></svg></button>
+      <div class="sheet-title">Settings</div>
+      <button class="glass-circle sheet-done" id="sheet-done" type="button" aria-label="Done"><svg class="ico-x"><use href="#i-check"/></svg></button>
+    </header>
+    <div class="sheet-scroll" id="sheet-scroll"></div>
+  </div>
+
+  <div class="menu-backdrop" id="menu-backdrop" hidden></div>
+  <div class="menu" id="menu" hidden></div>
+
+  <div class="flash" id="flash"></div>
+  <div class="shield" id="shield"></div>
+</div>
+</body>
+</html>
