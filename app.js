@@ -2,7 +2,7 @@
 import { SUIT_NAMES, STACKS, STACK_IDS, entrySteps, computeTargets } from './stacks.js';
 import { ForceSequencer, planLanding, splitDigits } from './force.js';
 
-const VERSION = '1.0.0';
+const VERSION = '1.0.1';
 
 // ---------------------------------------------------------------------------
 // Wheel tuning. Everything is derived from elapsed time (performance.now), so a
@@ -1409,6 +1409,7 @@ function renderSettings() {
   root.lastElementChild.style.marginTop = '26px';
 
   root.appendChild(el('div', 's-version', `Tempo ${VERSION}`));
+  root.appendChild(el('div', 's-diag', screenInfo));
   root.scrollTop = keep;
 }
 
@@ -1499,7 +1500,37 @@ const stop = (e) => e.preventDefault();
 document.addEventListener('touchmove', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
 document.addEventListener('pointerdown', wakeLockSoon, { passive: true });
 
+// ---------------------------------------------------------------------------
+// Fit the physical screen. From the home screen, iOS can report a viewport or a
+// bottom safe area that doesn't match the glass, which pushed bottom-anchored UI
+// up. There we size the app to the screen itself and use the real home-indicator gap.
+// ---------------------------------------------------------------------------
+let screenInfo = '';
+const insetProbe = el('div');
+insetProbe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;' +
+  'padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)';
+document.body.appendChild(insetProbe);
+
+function fitScreen() {
+  const cs = getComputedStyle(insetProbe);
+  const envTop = parseFloat(cs.paddingTop) || 0;
+  const envBottom = parseFloat(cs.paddingBottom) || 0;
+  const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+  const portrait = innerHeight >= innerWidth;
+  const screenH = portrait ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+  const root = document.documentElement.style;
+  if (standalone && portrait) {
+    root.setProperty('--app-h', screenH + 'px');
+    root.setProperty('--sab', (envTop >= 40 ? 34 : envBottom) + 'px');
+  } else {
+    root.removeProperty('--app-h');
+  }
+  screenInfo = `${standalone ? 'app' : 'browser'} · view ${innerWidth}×${innerHeight} · screen ${screen.width}×${screen.height} · insets ${envTop}/${envBottom}`;
+}
+fitScreen();
+
 window.addEventListener('resize', () => {
+  fitScreen();
   layoutTabs(true);
   picker.layout();
 });

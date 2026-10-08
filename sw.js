@@ -1,6 +1,6 @@
 // Tempo service worker: precache everything, then serve cache-first so the app
 // works fully offline. Bump CACHE whenever you deploy changed files.
-const CACHE = 'tempo-1.0.0';
+const CACHE = 'tempo-1.0.1';
 
 const SPLASH = [
   '1320x2868', '1206x2622', '1290x2796', '1179x2556', '1284x2778', '1170x2532',
